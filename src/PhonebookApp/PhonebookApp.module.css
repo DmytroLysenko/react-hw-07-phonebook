@@ -1,0 +1,23 @@
+@value colorBlueDark from "./utils/variables.module.css";
+@value colorGreyLight from "./utils/variables.module.css";
+@value colorWhite from "./utils/variables.module.css";
+
+.container {
+  width: 300px;
+  margin: 0 auto;
+  padding: 15px;
+  border-radius: 5px;
+  box-shadow: 0 0 3px colorBlueDark;
+  position: relative;
+  background-color: colorWhite;
+}
+
+.title-app {
+  color: colorBlueDark;
+  margin: 0 0 10px 0;
+}
+
+.title {
+  color: colorBlueDark;
+  margin: 10px 0;
+}

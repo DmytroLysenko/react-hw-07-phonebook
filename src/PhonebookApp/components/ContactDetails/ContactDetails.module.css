@@ -1,0 +1,97 @@
+@value colorGreyLightTransp from "../../utils/variables.module.css";
+@value colorDark from "../../utils/variables.module.css";
+@value colorBlueLight from "../../utils/variables.module.css";
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: colorGreyLightTransp;
+}
+
+.container {
+  position: absolute;
+  top: 15%;
+  left: 15%;
+  width: 70%;
+  max-height: 250px;
+  height: 60%;
+  box-shadow: 0 0 10px 0 colorDark;
+  border-radius: 5px;
+  text-align: center;
+  background-color: colorBlueLight;
+  color: colorDark;
+  overflow: hidden;
+}
+
+.containerInner {
+  height: 100%;
+}
+
+.contact {
+  height: 100%;
+}
+
+.avatar {
+  height: 40%;
+  margin: 0;
+  margin-bottom: 10px;
+  background-image: url("../../assets/user.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+
+.name {
+  margin: 0 auto;
+  width: 60%;
+  font-weight: bold;
+  font-style: italic;
+  font-size: 1.2em;
+  margin-bottom: 15px;
+  color: colorBlueDark;
+}
+
+.number {
+  font-weight: bold;
+  margin: 0 auto;
+  width: 60%;
+}
+
+.button {
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  border-radius: 5px;
+  background-color: transparent;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.btnNext {
+  composes: button;
+  top: 50%;
+  right: 3%;
+  background-image: url("../../assets/arrow-right.svg");
+}
+
+.btnPrev {
+  composes: button;
+  top: 50%;
+  left: 3%;
+  background-image: url("../../assets/arrow-left.svg");
+}
+
+.btnClose {
+  composes: button;
+  bottom: 5%;
+  right: 50%;
+  transform: translateX(50%);
+  background-image: url("../../assets/cross.svg");
+}

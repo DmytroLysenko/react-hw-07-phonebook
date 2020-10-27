@@ -1,0 +1,31 @@
+@value colorBlueDark from "../../utils/variables.module.css";
+@value colorGreyLight from "../../utils/variables.module.css";
+@value colorDark from "../../utils/variables.module.css";
+
+.container {
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 0 3px colorBlueDark;
+  margin-bottom: 10px;
+  transform-origin: top;
+}
+
+.input {
+  width: calc(100% - 20px);
+  border: none;
+  outline: none;
+  background-color: colorGreyLight;
+  border-radius: 5px;
+  padding: 5px 10px;
+}
+
+.input::placeholder {
+  font-weight: 500;
+  font-style: italic;
+  color: colorDark;
+}
+
+.input:focus {
+  box-shadow: 0 0 3px colorBlueDark;
+}
+

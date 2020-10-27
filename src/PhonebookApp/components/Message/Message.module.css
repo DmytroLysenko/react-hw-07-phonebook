@@ -1,0 +1,38 @@
+@value colorWhite from "../../utils/variables.module.css";
+@value colorRedLight from "../../utils/variables.module.css";
+
+.container {
+  padding: 10px;
+  background-color: colorRedLight;
+  max-width: 150px;
+  min-height: 10%;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
+
+.message {
+  margin: 0;
+  padding-right: 30px;
+  text-align: right;
+  position: relative;
+  color: colorWhite;
+}
+
+.message::after {
+  content: "";
+  display: block;
+  height: 100%;
+  width: 20px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-image: url("../../assets/notification.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}

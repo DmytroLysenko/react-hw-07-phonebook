@@ -1,0 +1,15 @@
+.enter {
+  transform: rotateX(90deg);
+}
+.enterActive {
+  transform: rotateX(0deg);
+  transition: all 250ms ease-in;
+}
+
+.exit {
+  transform: rotateX(0deg);
+}
+.exitActive {
+  transform: rotateX(90deg);
+  transition: all 250ms ease-out;
+}

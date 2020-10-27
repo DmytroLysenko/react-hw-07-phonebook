@@ -1,0 +1,58 @@
+@value colorBlueDark from "../../utils/variables.module.css";
+@value colorBlueLight from "../../utils/variables.module.css";
+@value colorBlueLightTransp from "../../utils/variables.module.css";
+@value colorWhite from "../../utils/variables.module.css";
+@value colorGreyLight from "../../utils/variables.module.css";
+@value colorDark from "../../utils/variables.module.css";
+
+.form {
+  box-shadow: 0px 0px 3px colorBlueDark;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.label {
+  display: block;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 10px 0;
+  font-weight: 500;
+  color: colorBlueLight;
+}
+
+.input {
+  width: 70%;
+  padding: 5px;
+  outline: none;
+  border: none;
+  border-radius: 3px;
+  background-color: colorGreyLight;
+  color: colorDark;
+}
+
+.input:focus {
+  box-shadow: 0px 0px 3px colorBlueDark;
+}
+
+.btn {
+  width: 100%;
+  background-color: colorBlueLight;
+  border: none;
+  border-radius: 5px;
+  margin-top: 5px;
+  padding: 5px 0;
+  outline: none;
+  color: colorWhite;
+  box-shadow: 0px 1px 3px colorBlueLight;
+}
+
+.btn:active {
+  background-color: colorBlueDark;
+  box-shadow: none;
+}
+
+.btn:disabled {
+  color: colorGreyLight;
+  background-color: colorBlueLightTransp;
+}
