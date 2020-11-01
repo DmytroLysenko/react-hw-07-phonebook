@@ -1,11 +1,18 @@
 import React from "react";
-import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
+
+import * as operations from "../../redux/contacts/contactsOperations";
+import * as actions from "../../redux/contacts/contactsActions";
+import selectors from "../../redux/contacts/contactsSelectors";
 
 import styles from "./ContactListItem.module.css";
 
-import contactsActions from "../../redux/contacts/contactsActions";
-
+/**
+ * Использование класса? - при анимации удаления
+ * элемента нет доступа к пропсам name и number
+ * Поэтому храним их в state до unmount компонента
+ */
 class ContactListItem extends React.Component {
   state = { ...this.props };
   render() {
@@ -25,25 +32,22 @@ class ContactListItem extends React.Component {
   }
 }
 
-const mapStateToProps = (state, { id }) => {
-  const contact = state.contacts.items.find((item) => item.id === id);
-  return {
-    ...contact,
-  };
-};
+const mapStateToProps = (state, { id }) => ({
+  ...selectors.contactById(state, id),
+});
 
 const mapDispatchToProps = (dispatch, { id }) => ({
   removeItem: (e) => {
     e.stopPropagation();
-    dispatch(contactsActions.contactRemove(id));
+    dispatch(operations.contactRemove(id));
   },
-  contactDetailsSet: () => dispatch(contactsActions.contactDetailsSet(id)),
+  contactDetailsSet: () => dispatch(actions.contactDetailsSet(id)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ContactListItem);
 
 ContactListItem.propTypes = {
-  id: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
   name: PropTypes.string,
   number: PropTypes.string,
   removeItem: PropTypes.func.isRequired,

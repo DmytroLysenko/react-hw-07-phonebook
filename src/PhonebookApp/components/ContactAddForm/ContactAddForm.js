@@ -2,19 +2,19 @@ import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
-import contactsActions from "../../redux/contacts/contactsActions";
+import { messageShow } from "../../redux/contacts/contactsActions";
+import { contactAdd } from "../../redux/contacts/contactsOperations";
+import selectors from "../../redux/contacts/contactsSelectors";
 
 import LOGS from "../../utils/LOGS";
 
 import styles from "./ContactAddForm.module.css";
 
-const uuid = require("uuid");
-
 class ContactForm extends React.Component {
   static propTypes = {
     contacts: PropTypes.arrayOf(
       PropTypes.exact({
-        id: PropTypes.string.isRequired,
+        id: PropTypes.number.isRequired,
         name: PropTypes.string.isRequired,
         number: PropTypes.string.isRequired,
       })
@@ -38,7 +38,6 @@ class ContactForm extends React.Component {
     e.preventDefault();
     const { name, number } = this.state;
     const contact = {
-      id: uuid.v4(),
       name: name.split(" ").join(" "),
       number,
     };
@@ -110,13 +109,13 @@ class ContactForm extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  contacts: state.contacts.items,
-  isMessage: Boolean(state.contacts.message),
+  contacts: selectors.contacts(state),
+  isMessage: Boolean(selectors.message(state)),
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  contactAdd: (contact) => dispatch(contactsActions.contactAdd(contact)),
-  messageShow: (message) => dispatch(contactsActions.messageSet(message)),
-});
+const mapDispatchToProps = {
+  contactAdd,
+  messageShow,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(ContactForm);

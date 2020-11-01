@@ -1,31 +1,32 @@
 import React from "react";
-import { connect } from "react-redux";
-import contactsActions from "../../redux/contacts/contactsActions";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
+
+import * as actions from "../../redux/contacts/contactsActions";
+import selectors from "../../redux/contacts/contactsSelectors";
+
 import styles from "./Filter.module.css";
 
-const Filter = ({ filter, onFilter }) => {
-  return (
-    <div className={styles.container}>
-      <input
-        type="text"
-        name="filter"
-        value={filter}
-        onChange={(e) => onFilter(e.target.value)}
-        autoComplete="off"
-        placeholder="Find contact by name"
-        className={styles.input}
-      />
-    </div>
-  );
-};
+const Filter = ({ filter, onFilter }) => (
+  <div className={styles.container}>
+    <input
+      type="text"
+      name="filter"
+      value={filter}
+      onChange={onFilter}
+      autoComplete="off"
+      placeholder="Find contact by name"
+      className={styles.input}
+    />
+  </div>
+);
 
 const mapStateToProps = (state) => ({
-  filter: state.contacts.filter,
+  filter: selectors.filter(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  onFilter: (keyword) => dispatch(contactsActions.filter(keyword)),
+  onFilter: (e) => dispatch(actions.filter(e.target.value)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Filter);

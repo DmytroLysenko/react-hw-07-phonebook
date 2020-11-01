@@ -1,0 +1,5 @@
+@value colorBlueLight from "../../utils/variables.module.css";
+
+.container {
+  color: colorBlueLight;
+}

@@ -1,8 +1,9 @@
 import React from "react";
-import { connect } from "react-redux";
-import contactsActions from "../../redux/contacts/contactsActions";
-
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
+
+import { messageClose } from "../../redux/contacts/contactsActions";
+import selectors from "../../redux/contacts/contactsSelectors";
 
 import styles from "./Message.module.css";
 
@@ -26,11 +27,11 @@ class Message extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  message: state.contacts.message,
+  message: selectors.message(state),
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  messageClose: () => dispatch(contactsActions.messageClose()),
-});
+const mapDispatchToProps = {
+  messageClose,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Message);

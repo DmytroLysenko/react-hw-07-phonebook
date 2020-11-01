@@ -1,21 +1,25 @@
 import React from "react";
-import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 
-import styles from "./ContactDetails.module.css";
+import {
+  contactDetailsClose,
+  contactDetailsSet,
+} from "../../redux/contacts/contactsActions";
+import selector from "../../redux/contacts/contactsSelectors";
 
-import contactsActions from "../../redux/contacts/contactsActions";
+import styles from "./ContactDetails.module.css";
 
 import contactDetailsAnimationLeft from "../../utils/animations/contactDetailsMoveLeft.module.css";
 import contactDetailsAnimationRight from "../../utils/animations/contactDetailsMoveRight.module.css";
 
 class ContactDetails extends React.Component {
   static propTypes = {
-    id: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
     number: PropTypes.string.isRequired,
-    allIds: PropTypes.arrayOf(PropTypes.string).isRequired,
+    contactsIdsByFilter: PropTypes.arrayOf(PropTypes.number).isRequired,
 
     contactDetailsClose: PropTypes.func.isRequired,
     contactDetailsSet: PropTypes.func.isRequired,
@@ -26,27 +30,29 @@ class ContactDetails extends React.Component {
   };
 
   handleDetailsNext = () => {
-    const { id: currentId, allIds } = this.props;
-    const currentIdx = allIds.indexOf(currentId);
+    const { id: currentId, contactsIdsByFilter } = this.props;
+    const currentIdx = contactsIdsByFilter.indexOf(currentId);
     this.setState({ isNext: true });
-    const nextIdx = currentIdx === allIds.length - 1 ? 0 : currentIdx + 1;
-    this.props.contactDetailsSet(allIds[nextIdx]);
+    const nextIdx =
+      currentIdx === contactsIdsByFilter.length - 1 ? 0 : currentIdx + 1;
+    this.props.contactDetailsSet(contactsIdsByFilter[nextIdx]);
   };
 
   handleDetailsPrev = () => {
-    const { id: currentId, allIds } = this.props;
-    const currentIdx = allIds.indexOf(currentId);
+    const { id: currentId, contactsIdsByFilter } = this.props;
+    const currentIdx = contactsIdsByFilter.indexOf(currentId);
     this.setState({ isNext: false });
-    const nextIdx = currentIdx === 0 ? allIds.length - 1 : currentIdx - 1;
-    this.props.contactDetailsSet(allIds[nextIdx]);
+    const nextIdx =
+      currentIdx === 0 ? contactsIdsByFilter.length - 1 : currentIdx - 1;
+    this.props.contactDetailsSet(contactsIdsByFilter[nextIdx]);
   };
 
   render() {
-    const { id, name, number } = this.props;
+    const { id, name, number, contactDetailsClose } = this.props;
     const { isNext } = this.state;
     return (
       <div className={styles.overlay}>
-        <div className={styles.container} id="contactDetails">
+        <div className={styles.container}>
           <TransitionGroup className={styles.containerInner}>
             <CSSTransition
               key={id}
@@ -78,7 +84,7 @@ class ContactDetails extends React.Component {
             className={styles.btnClose}
             data-action="close"
             type="button"
-            onClick={this.props.contactDetailsClose}
+            onClick={() => contactDetailsClose()}
           ></button>
         </div>
       </div>
@@ -87,18 +93,18 @@ class ContactDetails extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  const id = state.contacts.itemDetails;
-  const contact = state.contacts.items.find((item) => item.id === id);
-  const allIds = state.contacts.items.map((item) => item.id);
+  const id = selector.idContactDetails(state);
+  const contact = selector.contactById(state, id);
+  const contactsIdsByFilter = selector.contactsIdsByFilter(state);
   return {
     ...contact,
-    allIds,
+    contactsIdsByFilter,
   };
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  contactDetailsClose: () => dispatch(contactsActions.contactDetailsClose()),
-  contactDetailsSet: (id) => dispatch(contactsActions.contactDetailsSet(id)),
-});
+const mapDispatchToProps = {
+  contactDetailsClose,
+  contactDetailsSet,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(ContactDetails);

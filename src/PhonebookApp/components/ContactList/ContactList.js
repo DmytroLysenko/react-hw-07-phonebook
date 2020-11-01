@@ -1,19 +1,22 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
-import PropTypes from "prop-types";
+
+import selector from "../../redux/contacts/contactsSelectors";
 
 import ContactListItem from "../ContactListItem/ContactListItem";
 
 import styles from "./ContactList.module.css";
 import listItemAmimate from "../../utils/animations/listItem.module.css";
 
-const ContactList = ({ allIdList }) =>
-  allIdList.length === 0 ? (
+
+const ContactList = ({ contactsIdsByFilter }) =>
+  contactsIdsByFilter.length === 0 ? (
     <p className={styles.noList}>There are no contacts</p>
   ) : (
     <TransitionGroup component="ul" className={styles.list}>
-      {allIdList.map((id) => {
+      {contactsIdsByFilter.map((id) => {
         return (
           <CSSTransition
             timeout={250}
@@ -30,17 +33,12 @@ const ContactList = ({ allIdList }) =>
     </TransitionGroup>
   );
 
-const mapStateToProps = (state) => {
-  const filterNormalize = state.contacts.filter.toLowerCase();
-  return {
-    allIdList: state.contacts.items
-      .filter((item) => item.name.toLowerCase().includes(filterNormalize))
-      .map((item) => item.id),
-  };
-};
+const mapStateToProps = (state) => ({
+  contactsIdsByFilter: selector.contactsIdsByFilter(state),
+});
 
 export default connect(mapStateToProps)(ContactList);
 
 ContactList.propTypes = {
-  allIdList: PropTypes.arrayOf(PropTypes.string).isRequired,
+  contactsIdsByFilter: PropTypes.arrayOf(PropTypes.number).isRequired,
 };
